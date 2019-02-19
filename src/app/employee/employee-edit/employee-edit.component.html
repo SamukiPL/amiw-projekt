@@ -1,0 +1,25 @@
+<mat-card fxLayout="column" fxLayoutAlign="start stretch">
+  <mat-card-title>{{isNew ? "Add new employee" : "Edit employee"}}</mat-card-title>
+  <mat-card-content [formGroup]="emplyoeeForm" fxLayout="column" fxLayoutAlign="start stretch">
+    <mat-form-field>
+      <input matInput type="text" formControlName="name" placeholder="{{'Name'}}">
+      <mat-hint>{{'Name is required and must be at least 2 characters long'}}</mat-hint>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select formControlName="role" [compareWith]="roleCompareFn" placeholder="{{'Role'}}">
+        <mat-option *ngFor="let role of employeeService.role$ | async" [value]="role">{{role.name}}</mat-option>
+      </mat-select>
+      <mat-hint>{{'Role is required'}}</mat-hint>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="number" formControlName="salary" placeholder="{{'Salary'}}">
+      <mat-hint>{{'Salary is required and must be at least 1 number long'}}</mat-hint>
+    </mat-form-field>
+  </mat-card-content>
+  <!-- <mat-card-footer> -->
+  <mat-card-actions>
+    <button mat-raised-button (click)="saveEmployee()" [disabled]="emplyoeeForm.invalid">{{'Save'}}</button>
+    <button mat-button (click)="cancel()">{{'Cancel'}}</button>
+  </mat-card-actions>
+  <!-- </mat-card-footer> -->
+</mat-card>

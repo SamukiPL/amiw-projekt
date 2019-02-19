@@ -1,0 +1,47 @@
+<section fxFill fxLayout="row" fxLayoutAlign="center center">
+  <div style="padding: 10px !important;">
+    <mat-card fxFlex>
+      <mat-card-title>{{'Employees'}}</mat-card-title>
+      <mat-card-content>
+        <div class="table">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Salary</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let employee of employeesService.employees$ | async; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{employee.name}}</td>
+                <td>{{employee.role.name}}</td>
+                <td>{{employee.salary | currency: "PLN"}}</td>
+                <td>
+                  <button mat-icon-button matTooltip="{{'Edit employee'}}" (click)="editEmloyee(employee)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+
+                  <button mat-icon-button matTooltip="{{'Delete employee'}}" (click)="deleteEmloyee(employee)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </mat-card-content>
+      <!-- <mat-card-footer> -->
+      <mat-card-actions>
+        <button mat-raised-button (click)="newEmployee()">{{'Add new employee'}}</button>
+      </mat-card-actions>
+      <!-- </mat-card-footer> -->
+    </mat-card>
+  </div>
+  <div *ngIf="isEdit" style="padding: 10px; width: 400px">
+    <app-employee-edit [employee]="employeeInEdit" [isNew]="isNew" (editDone)="cancelEdit()"></app-employee-edit>
+  </div>
+</section>
